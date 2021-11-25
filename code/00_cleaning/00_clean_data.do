@@ -3,7 +3,7 @@
 
 global main_dir "C:\Users\mc72574\Dropbox\UT\UT Research\Presidenciales\data\"
 
-* Load data
+* Load data (downloaded directly from: https://oficial.servel.cl/resultados-preliminares-elecciones-presidenciales-parlamentarias-y-cores-2021/
 import delimited "${main_dir}Servel_20211121_PRESIDENCIALES\Servel_20211121_PRESIDENCIALES_CHILE.csv", delimiter(";") clear
 
 * Transform votes to numeric
@@ -12,6 +12,8 @@ gen votos_preliminar = regexs(2) if regexm(votos_preliminar_string, "^([^0-9]*)(
 destring votos_preliminar, replace
 
 replace candidato = strtrim(candidato)
+replace region_nombre = strtrim(region_nombre)
+replace comuna_nombre = strtrim(comuna_nombre)
 
 * Create added variables by county
 
@@ -26,6 +28,7 @@ export delimited using "${main_dir}working\servel_county_clean.csv", replace
 
 **** CASEN *****
 
+* Load data (downloaded directly from: http://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2017)
 use "${main_dir}casen_2017_stata\Casen 2017.dta", clear
 
 gen pobreza_d = pobreza<=2
