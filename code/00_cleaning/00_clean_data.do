@@ -19,7 +19,10 @@ replace comuna_nombre = strtrim(comuna_nombre)
 
 collapse (sum) votos_preliminar, by(region_id region_nombre comuna_id comuna_nombre candidato)
 
-bysort region_id region_nombre comuna_id comuna_nombre: egen total_votos = sum(votos_preliminar)
+bysort region_id region_nombre comuna_id comuna_nombre: gen total_votos_aux = sum(votos_preliminar) if candidato=="Total Sufragios Emitidos"
+bysort region_id region_nombre comuna_id comuna_nombre: egen total_votos = sum(total_votos)
+
+drop total_votos_aux
 
 gen p_votos = votos_preliminar/total_votos
 
