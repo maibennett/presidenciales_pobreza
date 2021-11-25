@@ -37,7 +37,8 @@ replace pobreza_d = . if pobreza==.
 gen pobreza_ext_d = pobreza<=1
 replace pobreza_ext_d = . if pobreza==.
 
+gen total = 1
 
-collapse (mean) pobreza_d pobreza_ext_d pobreza_multi_4d pobreza_multi_5d [fw = expc], by(comuna)
+collapse (mean) pobreza_d pobreza_ext_d pobreza_multi_4d pobreza_multi_5d (sum) total [fw = expc], by(comuna)
 
 export delimited using "${main_dir}working\casen_county_clean.csv", nolabel replace
