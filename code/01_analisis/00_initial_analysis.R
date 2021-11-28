@@ -86,7 +86,7 @@ d %>% filter(Boric==1) %>%
 d %>% filter(Boric==1) %>% 
   ggplot(data = ., aes(x = pobreza_multi_4d*100, y = p_votos*100)) +
   geom_point(aes(size = total/1000), pch = 21, color = "dark orange", fill = alpha("dark orange", 0.3)) + 
-  geom_smooth(se = TRUE, color = "#E16462", fill = alpha("#E16462", 0.3), lwd = 1.1) +
+  geom_smooth(aes(weight = total), se = TRUE, color = "#E16462", fill = alpha("#E16462", 0.3), lwd = 1.1) +
   scale_size_continuous(range = c(1, 10), name = "Población (miles)") +
   theme_bw() +
   theme_ipsum_fsc() + #plain 
@@ -143,7 +143,7 @@ d %>% filter(Boric==1 & region_nombre=="METROPOLITANA DE SANTIAGO") %>%
   theme_bw() +
   theme_ipsum_fsc() + #plain 
   xlab("Pobreza Multidimensional (%)") + ylab("Total Votos (%)")+
-  labs(title = "Correlación Pobreza y Votos", 
+  labs(title = "Correlación Pobreza y Votos en la RM", 
        subtitle = "Garbiel Boric", 
        caption = "Source: @maibennett") + 
   theme(plot.margin=unit(c(1,1,1.5,1.2),"cm"),
@@ -232,7 +232,7 @@ d %>% filter(Kast==1) %>%
 d %>% filter(Kast==1) %>% 
   ggplot(data = ., aes(x = pobreza_multi_4d*100, y = p_votos*100)) +
   geom_point(aes(size = total/1000), pch = 21, color = "dark orange", fill = alpha("dark orange", 0.3)) + 
-  geom_smooth(se = TRUE, color = "#E16462", fill = alpha("#E16462", 0.3), lwd = 1.1) +
+  geom_smooth(aes(weight = total), se = TRUE, color = "#E16462", fill = alpha("#E16462", 0.3), lwd = 1.1) +
   scale_size_continuous(range = c(1, 10), name = "Población (miles)") +
   theme_bw() +
   theme_ipsum_fsc() + #plain 
@@ -251,6 +251,35 @@ d %>% filter(Kast==1) %>%
         axis.title.y = element_text(size=12),#margin = margin(t = 0, r = 10, b = 0, l = 0)),
         axis.text.y = element_text(size = 10),legend.position=c(0.9,0.9),
         legend.title = element_text(size = 12),
+        legend.text = element_text(size=10),
+        legend.background = element_rect(fill="white",colour ="dark grey"),
+        title = element_text(size=14))
+
+
+
+# RM
+d %>% filter(Kast==1 & region_nombre=="METROPOLITANA DE SANTIAGO") %>% 
+  ggplot(data = ., aes(x = pobreza_multi_4d*100, y = p_votos*100)) +
+  geom_point(pch = 21, color = "dark orange", fill = alpha("dark orange", 0.3),
+             size = 3) + 
+  geom_smooth(se = TRUE, color = "#E16462", fill = alpha("#E16462", 0.3), lwd = 1.1) + 
+  theme_bw() +
+  theme_ipsum_fsc() + #plain 
+  xlab("Pobreza Multidimensional (%)") + ylab("Total Votos (%)")+
+  labs(title = "Correlación Pobreza y Votos en la RM", 
+       subtitle = "José Antonio Kast", 
+       caption = "Source: @maibennett") + 
+  theme(plot.margin=unit(c(1,1,1.5,1.2),"cm"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.line = element_line(colour = "dark grey"))+
+  theme(axis.title.x = element_text(size=12),#margin = margin(t = 10, r = 0, b = 0, l = 0)),
+        axis.text.x = element_text(size = 10),
+        axis.title.y = element_text(size=12),#margin = margin(t = 0, r = 10, b = 0, l = 0)),
+        axis.text.y = element_text(size = 10),legend.position=c(0.9,0.9),
+        legend.title = element_text(size = 10),
         legend.text = element_text(size=10),
         legend.background = element_rect(fill="white",colour ="dark grey"),
         title = element_text(size=14))
